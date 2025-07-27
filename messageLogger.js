@@ -207,7 +207,7 @@ async function updateMessageLog(
     var channelID = newMessage.channel.id
     var thisChannel = channelCache.get(guildID)?.get(channelID)
 
-    if (serverCache.get(guildID) == oldMessage.channel.parentId) {
+    if (serverCache.get(guildID) == newMessage.channel.parentId) {
         return
     }
     /**
@@ -224,7 +224,7 @@ async function updateMessageLog(
         var mongoMessage = await Message.findOne({
             channel: channelID,
             guildID: guildID,
-            id: oldMessage.id,
+            id: newMessage.id,
         })
         if (!mongoMessage) {
             console.warn(

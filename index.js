@@ -82,11 +82,17 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (!newMessage.guild) return // Ignore DMs
     if (!serverCache.has(newMessage.guild.id)) return // Ignore if server is not enabled
     // Log updated message content
-    console.log(
-        `[${newMessage.guild?.name || 'DM'}][#${newMessage.channel?.name}] ${
-            newMessage.author.tag
-        }: ${oldMessage.content} -> ${newMessage.content}`
-    )
+    try {
+        console.log(
+            `[${newMessage.guild?.name || 'DM'}][#${newMessage.channel?.name}] ${newMessage.author.tag
+            }: ${oldMessage.content} -> ${newMessage.content}`
+        )
+    } catch (err) { 
+        console.log(
+            `[${newMessage.guild?.name || 'DM'}][#${newMessage.channel?.name}] ${newMessage.author.tag
+            }: "unknown" -> ${newMessage.content}`
+        )
+    }
     updateMessageLog(oldMessage, newMessage, serverCache, channelCache)
 })
 client.on('interactionCreate', async (interaction) => {
